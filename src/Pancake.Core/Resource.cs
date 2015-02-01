@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pancake
+namespace Pancake.Core
 {
-    public class Class1
+    public class Resource
     {
     }
 }
