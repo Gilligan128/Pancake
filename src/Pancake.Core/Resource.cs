@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace Pancake.Core
 {
-    public class Resource
+    public class Resource 
     {
+        public Resource()
+        {
+            Ensure = Ensure.Present;
+        }
+
+        public Ensure Ensure { get; set; }
     }
 }
