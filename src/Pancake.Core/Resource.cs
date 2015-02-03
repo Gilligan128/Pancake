@@ -1,18 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Pancake.Core
 {
-    public class Resource 
+    public abstract class Resource
     {
-        public Resource()
+        protected Resource()
         {
             Ensure = Ensure.Present;
         }
 
         public Ensure Ensure { get; set; }
+
+        public string Name { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(this, obj)) return true;
+            if (ReferenceEquals(null, obj)) return false;
+            if (GetType() != obj.GetType()) return false;
+            var vo = obj as Resource;
+            return GetEqualityComponents().SequenceEqual(vo.GetEqualityComponents());
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCodeHelper.CombineHashCodes(GetEqualityComponents());
+        }
+
+        public abstract IEnumerable<object> GetEqualityComponents();
     }
 }
+
