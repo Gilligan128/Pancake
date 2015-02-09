@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiServingTests.cs" />
+    <Compile Include="BehaviorsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestResource.cs" />
     <Compile Include="TestResourceProvider.cs" />

@@ -3,7 +3,7 @@
     public interface ResourceConfig
     {
         void Resource(Resource resource);
-        void OptimizeWith(ResourceOptimizer resourceOptimizer);
         void RegisterProvider<TResource>(ResourceProvider<TResource> resourceProvider) where TResource : Resource;
+        void RegisterBehavior(ServingBehavior behavior);
     }
 }

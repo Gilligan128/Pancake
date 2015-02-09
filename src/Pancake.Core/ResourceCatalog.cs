@@ -10,9 +10,10 @@ namespace Pancake.Core
     {
         private readonly HashSet<Resource> _resources = new HashSet<Resource>();
         public Resource[] Resources => _resources.ToArray();
-        public ResourceOptimizer Optimizer { get; protected set; }
+        public ServingBehavior[] Behaviors => _behaviors.ToArray();
 
         public Dictionary<Type, ResourceProvider> _providers  =  new Dictionary<Type, ResourceProvider>();
+        private readonly HashSet<ServingBehavior> _behaviors = new HashSet<ServingBehavior>();
 
         public ResourceProvider ProviderFor(Type key)
         {
@@ -24,15 +25,15 @@ namespace Pancake.Core
             _resources.Add(resource);
         }
 
-        public void OptimizeWith(ResourceOptimizer resourceProvider)
-        {
-            Optimizer = resourceProvider;
-        }
 
-  
         public void RegisterProvider<TResource>(ResourceProvider<TResource> resourceProvider) where TResource : Resource
         {
             _providers.Add(typeof(TResource), resourceProvider);
+        }
+
+        public void RegisterBehavior(ServingBehavior behavior)
+        {
+            _behaviors.Add(behavior);
         }
 
         public ResourceProvider<TResource> ProviderFor<TResource>() where TResource : Resource

@@ -50,8 +50,8 @@
     <Compile Include="Resource.cs" />
     <Compile Include="ResourceCatalog.cs" />
     <Compile Include="ResourceConfig.cs" />
-    <Compile Include="ResourceOptimizer.cs" />
     <Compile Include="ResourceProvider.cs" />
+    <Compile Include="ServingBehavior.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

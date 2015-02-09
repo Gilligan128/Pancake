@@ -14,6 +14,14 @@ namespace Pancake.Core
 
         public void Serve()
         {
+            Action action = ServeCore;
+            var behaviorChain = _catalog.Behaviors.Reverse().Aggregate(action,
+                (next, behavior) => () => behavior.Serve(_catalog, next));
+            behaviorChain();
+        }
+
+        private void ServeCore()
+        {
             foreach (var resourceSet in _catalog.Resources.GroupBy(r => r.GetType()))
             {
                 var provider = _catalog.ProviderFor(resourceSet.Key);
