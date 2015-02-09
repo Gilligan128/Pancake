@@ -29,48 +29,28 @@ namespace Pancake.Tests
             WasSynchronized = true;
         }
 
-        public TestResource[] GetSystemResources(TestResource[] resources)
+        public override TestResource[] GetSystemResources(TestResource[] resources)
         {
             return _systemResourcs.Join(resources, l => l.Name, r => r.Name, (resource, testResource) => resource).ToArray();
         }
 
-        public void Create(TestResource resouce)
+        public override void Create(TestResource resouce)
         {
             _createdResources.Add(resouce);
         }
 
-        public void Destroy(TestResource resource)
+        public override void Destroy(TestResource resource)
         {
             _destroyedResources.Add(resource);
         }
 
-        public void Synchronize(TestResource resource, TestResource systemResource)
+        public override void Synchronize(TestResource resource, TestResource systemResource)
         {
             _synchronizedResources.Add(resource);
         }
 
-        public Resource[] GetSystemResources(Resource[] resourceSet)
+        public override void Flush()
         {
-            return GetSystemResources(resourceSet.OfType<TestResource>().ToArray()).OfType<Resource>().ToArray();
-        }
-
-        public void Synchronize(Resource expectedResource, Resource systemResource)
-        {
-            Synchronize((TestResource)expectedResource, (TestResource)systemResource);
-        }
-
-        public void Flush()
-        {
-        }
-
-        public void Create(Resource missingResource)
-        {
-            Create((TestResource)missingResource);
-        }
-
-        public void Destroy(Resource resource)
-        {
-            Destroy((TestResource)resource);
         }
     }
 }

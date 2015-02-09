@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pancake.Core", "Pancake.Cor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pancake.Tests", "Pancake.Tests\Pancake.Tests.csproj", "{C60990FC-B0D7-4439-97CD-DC39DEF190A5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pancake.NHibernate", "Pancake.NHibernate\Pancake.NHibernate.csproj", "{242B7B53-F196-447F-BA8D-CD320DDA9353}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{C60990FC-B0D7-4439-97CD-DC39DEF190A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C60990FC-B0D7-4439-97CD-DC39DEF190A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C60990FC-B0D7-4439-97CD-DC39DEF190A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{242B7B53-F196-447F-BA8D-CD320DDA9353}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{242B7B53-F196-447F-BA8D-CD320DDA9353}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{242B7B53-F196-447F-BA8D-CD320DDA9353}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{242B7B53-F196-447F-BA8D-CD320DDA9353}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

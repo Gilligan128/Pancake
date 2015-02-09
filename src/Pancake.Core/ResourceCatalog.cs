@@ -11,6 +11,7 @@ namespace Pancake.Core
         private readonly HashSet<Resource> _resources = new HashSet<Resource>();
         public Resource[] Resources => _resources.ToArray();
         public ServingBehavior[] Behaviors => _behaviors.ToArray();
+        public ResourceProvider[] Providers => _providers.Values.ToArray();
 
         public Dictionary<Type, ResourceProvider> _providers  =  new Dictionary<Type, ResourceProvider>();
         private readonly HashSet<ServingBehavior> _behaviors = new HashSet<ServingBehavior>();
