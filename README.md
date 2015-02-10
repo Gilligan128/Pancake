@@ -14,7 +14,7 @@ Here you declare what your system resources should look like.
 Serving
 This will apply all Resources to ensure their desired state.
 
-Supported Persistence Mechanisms (in order of implementation):
+Planned Supported Persistence Mechanisms (in order of implementation):
 - [ ] NHibernate 
 - [ ] ADO.Net 
 - [ ] RavendDB - Maybe?
