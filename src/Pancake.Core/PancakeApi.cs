@@ -22,10 +22,12 @@ namespace Pancake.Core
 
         private void ServeCore()
         {
-            foreach (var resourceSet in _catalog.Resources.GroupBy(r => r.GetType()))
+            foreach (var resourceSet in _catalog.Resources.GroupBy(r => r.GetType())
+                .Select(r => new { provider = _catalog.ProviderFor(r.Key), resources = r.ToArray()})
+                .OrderBy(kvp => Array.IndexOf(_catalog.Providers, kvp.provider)))
             {
-                var provider = _catalog.ProviderFor(resourceSet.Key);
-                var resources = resourceSet.ToArray();
+                var provider = resourceSet.provider;
+                var resources = resourceSet.resources;
                 var systemResources = provider.GetSystemResources(resources);
                 var matchingResourcePairs =
                     resources.Join(systemResources, l => l.Name, r => r.Name, (should, system) => new {should, system})
