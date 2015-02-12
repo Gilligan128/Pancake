@@ -9,7 +9,7 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Like Puppet or Chef for Seeding Data. Lets you configure NHibernate Entities to a desired state.</description>
       <tags>NHibernate,Seeding,Config,Desired State</tags>
-      <projecturl>https://github.com/Gilligan128/Pancake</projecturl>
+      <projectUrl>https://github.com/Gilligan128/Pancake</projectUrl>
       <licenseUrl>https://github.com/Gilligan128/Pancake/blob/master/license.txt</licenseUrl>
     </metadata>
 </package>
