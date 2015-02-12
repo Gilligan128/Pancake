@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+      <id>$id$</id>
+      <version>$version$</version>
+      <title>$title$</title>
+      <authors>$author$</authors>
+      <owners>$author$</owners>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Like Puppet or Chef for Seeding Data. Lets you configure peristent records to a desired state.</description>
+      <tags>Seeding,Config,Desired State</tags>
+      <projecturl>https://github.com/Gilligan128/Pancake</projecturl>
+      <licenseUrl>https://github.com/Gilligan128/Pancake/blob/master/license.txt</licenseUrl>
+    </metadata>
+</package>

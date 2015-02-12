@@ -55,10 +55,12 @@
     <ProjectReference Include="..\Pancake.Core\Pancake.Core.csproj">
       <Project>{7d6cc49c-64d4-4042-8730-1a120ff73d77}</Project>
       <Name>Pancake.Core</Name>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Pancake.NHibernate.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
