@@ -29,6 +29,11 @@ namespace Pancake.Core
         }
 
         public abstract IEnumerable<object> GetEqualityComponents();
+
+        public override string ToString()
+        {
+            return string.Format("{0}['{1}']", GetType().Name, Name);
+        }
     }
 }
 

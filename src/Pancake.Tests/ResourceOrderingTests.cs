@@ -14,43 +14,47 @@ namespace Pancake.Tests
         public void serves_in_order_of_provider_registration_if_resources_are_registered_in_reverse()
         {
             var sut = new PancakeApi();
-            var servedProviders = new List<ResourceProvider>();
-            var firstProvider = new OrderedProvider<ResourceA>(servedProviders);
-            var secondProvider = new OrderedProvider<ResourceB>(servedProviders);
+            List<Resource> served = new List<Resource>();
+            var firstProvider = new OrderedProvider<ResourceA>(served);
+            var secondProvider = new OrderedProvider<ResourceB>(served);
+            var resourceA = new ResourceA() { Name = "A"};
+            var resourceB = new ResourceB() { Name = "B"};
             sut.Configure(cfg =>
             {
                 cfg.RegisterProvider(firstProvider);
                 cfg.RegisterProvider(secondProvider);
-                cfg.Resource(new ResourceB() { Name = "B"});
-                cfg.Resource(new ResourceA() { Name = "A"});
+                cfg.Resource(resourceB);
+                cfg.Resource(resourceA);
             });
 
 
             sut.Serve();
 
-            servedProviders[0].ShouldEqual(firstProvider);
-            servedProviders[1].ShouldEqual(secondProvider);
+            served[0].ShouldEqual(resourceA);
+            served[1].ShouldEqual(resourceB);
         }
 
         public void serves_in_order_of_provider_registration_if_resources_are_registered_in_order()
         {
             var sut = new PancakeApi();
-            var servedProviders = new List<ResourceProvider>();
-            var firstProvider = new OrderedProvider<ResourceA>(servedProviders);
-            var secondProvider = new OrderedProvider<ResourceB>(servedProviders);
+            var servedResources = new List<Resource>();
+            var firstProvider = new OrderedProvider<ResourceA>(servedResources);
+            var secondProvider = new OrderedProvider<ResourceB>(servedResources);
+            var resourceA = new ResourceA() { Name = "A" };
+            var resourceB = new ResourceB() { Name = "B" };
             sut.Configure(cfg =>
             {
                 cfg.RegisterProvider(firstProvider);
                 cfg.RegisterProvider(secondProvider);
-                cfg.Resource(new ResourceA() { Name = "A" });
-                cfg.Resource(new ResourceB() { Name = "B" });
+                cfg.Resource(resourceA);
+                cfg.Resource(resourceB);
             });
 
 
             sut.Serve();
 
-            servedProviders[0].ShouldEqual(firstProvider);
-            servedProviders[1].ShouldEqual(secondProvider);
+            servedResources[0].ShouldEqual(resourceA);
+            servedResources[1].ShouldEqual(resourceB);
         }
     }
 
@@ -74,21 +78,21 @@ namespace Pancake.Tests
 
     public class OrderedProvider<TResource> : ResourceProvider<TResource> where TResource : Resource
     {
-        private readonly List<ResourceProvider> _servedProviders;
+        private readonly List<Resource> _served;
 
-        public OrderedProvider(List<ResourceProvider> servedProviders)
+        public OrderedProvider(List<Resource> served)
         {
-            _servedProviders = servedProviders;
+            _served = served;
         }
 
         public override TResource[] GetSystemResources(TResource[] resources)
         {
-            _servedProviders.Add(this);
             return new TResource[] { };
         }
 
-        public override void Create(TResource resouce)
+        public override void Create(TResource resource)
         {
+            _served.Add(resource);
         }
 
         public override void Destroy(TResource resource)

@@ -15,7 +15,7 @@ namespace Pancake.Core
         public void Serve()
         {
             Action action = ServeCore;
-            var behaviorChain = _catalog.Behaviors.Reverse().Aggregate(action,
+            var behaviorChain = _catalog.ServingBehaviors.Reverse().Aggregate(action,
                 (next, behavior) => () => behavior.Serve(_catalog, next));
             behaviorChain();
         }
