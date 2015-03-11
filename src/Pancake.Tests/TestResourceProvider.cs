@@ -4,22 +4,21 @@ using Pancake.Core;
 
 namespace Pancake.Tests
 {
-    public class TestResourceProvider : ResourceProvider<TestResource>
+    public class TestResourceProvider<TResource> : ResourceProvider<TResource> where TResource : Resource
     {
-        private readonly List<TestResource> _createdResources = new List<TestResource>();
-        private readonly List<TestResource> _destroyedResources = new List<TestResource>();
-        private readonly List<TestResource> _synchronizedResources = new List<TestResource>();
-        private readonly List<TestResource> _systemResourcs = new List<TestResource>();
+        private readonly List<TResource> _createdResources = new List<TResource>();
+        private readonly List<TResource> _destroyedResources = new List<TResource>();
+        private readonly List<TResource> _synchronizedResources = new List<TResource>();
+        private readonly List<TResource> _systemResourcs = new List<TResource>();
         public bool WasCreated { get; protected set; }
         public bool IsDifferent => true;
         public bool WasDestroyed { get; protected set; }
         public bool WasSynchronized { get; protected set; }
-        public TestResource SystemResource { get; set; }
-        public TestResource[] SynchronizedResources => _synchronizedResources.ToArray();
-        public TestResource[] DestroyedResources => _destroyedResources.ToArray();
-        public TestResource[] CreatedResources => _createdResources.ToArray();
+        public TResource[] SynchronizedResources => _synchronizedResources.ToArray();
+        public TResource[] DestroyedResources => _destroyedResources.ToArray();
+        public TResource[] CreatedResources => _createdResources.ToArray();
 
-        public void AddSystemResource(TestResource resource)
+        public void AddSystemResource(TResource resource)
         {
             _systemResourcs.Add(resource);
         }
@@ -29,22 +28,22 @@ namespace Pancake.Tests
             WasSynchronized = true;
         }
 
-        public override TestResource[] GetSystemResources(TestResource[] resources)
+        public override TResource[] GetSystemResources(TResource[] resources)
         {
             return _systemResourcs.Join(resources, l => l.Name, r => r.Name, (resource, testResource) => resource).ToArray();
         }
 
-        public override void Create(TestResource resouce)
+        public override void Create(TResource resouce)
         {
             _createdResources.Add(resouce);
         }
 
-        public override void Destroy(TestResource resource)
+        public override void Destroy(TResource resource)
         {
             _destroyedResources.Add(resource);
         }
 
-        public override void Synchronize(TestResource resource, TestResource systemResource)
+        public override void Synchronize(TResource resource, TResource systemResource)
         {
             _synchronizedResources.Add(resource);
         }

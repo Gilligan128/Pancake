@@ -5,52 +5,52 @@ using System.Linq;
 
 namespace Pancake.Core.DependencyResolution
 {
-    public class ResourceGraph
+    public class ResourceGraph : DependencyGraph<Resource>
     {
+       
+    }
 
-        private readonly ResourceNode _rootNode = ResourceNode.RootNode(new ResourceNode[] { });
+    public class DependencyGraph<T>
+    {
+        private readonly DependencyNode<T> _rootNode = DependencyNode<T>.RootNode(new DependencyNode<T>[] { });
 
-
-        public void AddNode(ResourceNode node)
+        public void AddNode(DependencyNode<T> node)
         {
             _rootNode.AddDependency(node);
         }
 
-
-        public Resource[] ResolveDependencies()
+        public T[] ResolveDependencies()
         {
-            var resolved = new HashSet<ResourceNode>();
-            var seen = new HashSet<ResourceNode>();
+            var resolved = new HashSet<T>();
+            var seen = new HashSet<T>();
             ResolveDependencies(_rootNode, resolved, seen);
-            return resolved.Take(resolved.Count-1).Select(x => x.Resource).ToArray();
+            return resolved.Take(resolved.Count-1).ToArray();
         }
 
-      
-
-        private void ResolveDependencies(ResourceNode node, ISet<ResourceNode> resolved, ISet<ResourceNode> seen)
+        private void ResolveDependencies(DependencyNode<T> node, ISet<T> resolved, ISet<T> seen)
         {
             //from http://www.electricmonk.nl/log/2008/08/07/dependency-resolving-algorithm/
-            seen.Add(node);
+            seen.Add(node.Element);
             foreach (var dependency in node.Dependencies)
             {
-                if (resolved.Contains(dependency))
+                if (resolved.Contains(dependency.Element))
                     continue;
 
-                if (seen.Contains(dependency))
-                    throw new CircularReferenceException(node, dependency);
+                if (seen.Contains(dependency.Element))
+                    throw new CircularReferenceException(node.Element.ToString(), dependency.Element.ToString());
 
                 ResolveDependencies(dependency, resolved, seen);
             }
 
-            resolved.Add(node);
+            resolved.Add(node.Element);
         }
 
-
+       
     }
 
-    internal class CircularReferenceException : Exception
+    public class CircularReferenceException : Exception
     {
-        public CircularReferenceException(ResourceNode node, ResourceNode dependency) : base(string.Format("Circular reference detected: {0} -> {1}", node.Resource, dependency.Resource))
+        public CircularReferenceException(string node, string dependency) : base(string.Format("Circular reference detected: {0} -> {1}", node, dependency))
         {
 
         }

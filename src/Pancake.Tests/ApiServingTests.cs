@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace Pancake.Tests
                 Name = "test",
                 Ensure = Ensure.Absent
             };
-            var resourceProvider = new TestResourceProvider();
+            var resourceProvider = new TestResourceProvider<TestResource>();
             sut.Configure(cfg =>
             {
                 cfg.RegisterProvider(resourceProvider);
@@ -34,7 +35,7 @@ namespace Pancake.Tests
         public void should_create_resources_that_do_not_exist_but_ensured_present()
         {
             var sut = new PancakeApi();
-            var resourceProvider = new TestResourceProvider();
+            var resourceProvider = new TestResourceProvider<TestResource>();
             var testResource = new TestResource
             {
                 Name = "test",
@@ -54,7 +55,7 @@ namespace Pancake.Tests
         public void should_not_destroy_resource_that_does_not_exist_and_ensured_absent()
         {
             var sut = new PancakeApi();
-            var resourceProvider = new TestResourceProvider();
+            var resourceProvider = new TestResourceProvider<TestResource>();
             var testResource = new TestResource
             {
                 Name = "test",
@@ -79,7 +80,7 @@ namespace Pancake.Tests
                 Name = "different",
                 Ensure = Ensure.Present
             };
-            var resourceProvider = new TestResourceProvider();
+            var resourceProvider = new TestResourceProvider<TestResource>();
             resourceProvider.AddSystemResource(testResource);
             sut.Configure(cfg =>
             {
@@ -95,15 +96,15 @@ namespace Pancake.Tests
         public void should_synchronize_resource_that_is_different()
         {
             var sut = new PancakeApi();
-            var sysResource = new TestResource
+            var sysResource = new DescriptiveResource
             {
                 Name = "test",
                 Description = "original",
                 Ensure = Ensure.Present
             };
-            var resourceProvider = new TestResourceProvider();
+            var resourceProvider = new TestResourceProvider<DescriptiveResource>();
             resourceProvider.AddSystemResource(sysResource);
-            var testResource = new TestResource
+            var testResource = new DescriptiveResource
             {
                 Name = "test",
                 Description = "different"
@@ -122,14 +123,14 @@ namespace Pancake.Tests
         public void should_not_synchronize_when_resource_exists_but_is_ensured_absent()
         {
             var sut = new PancakeApi();
-            var resourceProvider = new TestResourceProvider();
-            var systemResource = new TestResource()
+            var resourceProvider = new TestResourceProvider<DescriptiveResource>();
+            var systemResource = new DescriptiveResource()
             {
                 Name = "test",
                 Description = "test"
             };
             resourceProvider.AddSystemResource(systemResource);
-            var testResource = new TestResource
+            var testResource = new DescriptiveResource
             {
                 Name = "test",
                 Ensure = Ensure.Absent,
@@ -146,5 +147,16 @@ namespace Pancake.Tests
             resourceProvider.SynchronizedResources.ShouldNotContain(testResource);
         }
 
+    }
+
+    public class DescriptiveResource : Resource
+    {
+        public override IEnumerable<object> GetEqualityComponents()
+        {
+            yield return Name;
+            yield return Description;
+        }
+
+        public string Description { get; set; }
     }
 }

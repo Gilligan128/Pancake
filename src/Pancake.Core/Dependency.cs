@@ -12,6 +12,13 @@ namespace Pancake.Core
         {
             Name = name;
         }
+
+
+        public static implicit operator Dependency<TResource>(string input)
+        {
+            return new Dependency<TResource>(input);
+        }
+
         public string Name { get; protected set; }
     }
 }

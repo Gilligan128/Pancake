@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Pancake.Core;
 using Should;
-using Should.Core.Assertions;
 
 namespace Pancake.Tests
 {
@@ -14,11 +10,11 @@ namespace Pancake.Tests
         public void serves_in_order_of_provider_registration_if_resources_are_registered_in_reverse()
         {
             var sut = new PancakeApi();
-            List<Resource> served = new List<Resource>();
+            var served = new List<Resource>();
             var firstProvider = new OrderedProvider<ResourceA>(served);
             var secondProvider = new OrderedProvider<ResourceB>(served);
-            var resourceA = new ResourceA() { Name = "A"};
-            var resourceB = new ResourceB() { Name = "B"};
+            var resourceA = new ResourceA {Name = "A"};
+            var resourceB = new ResourceB {Name = "B"};
             sut.Configure(cfg =>
             {
                 cfg.RegisterProvider(firstProvider);
@@ -40,8 +36,8 @@ namespace Pancake.Tests
             var servedResources = new List<Resource>();
             var firstProvider = new OrderedProvider<ResourceA>(servedResources);
             var secondProvider = new OrderedProvider<ResourceB>(servedResources);
-            var resourceA = new ResourceA() { Name = "A" };
-            var resourceB = new ResourceB() { Name = "B" };
+            var resourceA = new ResourceA {Name = "A"};
+            var resourceB = new ResourceB {Name = "B"};
             sut.Configure(cfg =>
             {
                 cfg.RegisterProvider(firstProvider);
@@ -56,9 +52,57 @@ namespace Pancake.Tests
             servedResources[0].ShouldEqual(resourceA);
             servedResources[1].ShouldEqual(resourceB);
         }
+
+        protected void serves_in_dependency_order()
+        {
+            var sut = new PancakeApi();
+            var servedResources = new List<Resource>();
+            var dependedResource1 = new DependedResource {Name = "First"};
+            var dependedResource2 = new DependedResource {Name = "Second"};
+            var dependingResource1 = new DependingResource
+            {
+                Name = "Second To Last",
+                Dependency = dependedResource1.Name
+            };
+            var dependingResource2 = new DependingResource
+            {
+                Name = "Last",
+                Dependency = dependedResource2.Name
+            };
+            sut.Configure(cfg =>
+            {
+                cfg.RegisterProvider(new OrderedProvider<DependingResource>(servedResources));
+                cfg.RegisterProvider(new OrderedProvider<DependedResource>(servedResources));
+            });
+
+            sut.Resources(cfg =>
+            {
+                cfg.Resource(dependingResource1);
+                cfg.Resource(dependingResource2);
+                cfg.Resource(dependedResource1);
+                cfg.Resource(dependedResource2);
+            });
+
+            sut.Serve();
+
+            servedResources.Take(2).ShouldContain(dependedResource1);
+            servedResources.Take(2).ShouldContain(dependedResource2);
+            servedResources.Skip(2).ShouldContain(dependingResource1);
+            servedResources.Skip(2).ShouldContain(dependingResource2);
+        }
     }
 
-    class ResourceA : Resource
+    internal class DependingResource : TestResource
+    {
+        public Dependency<DependedResource> Dependency { get; set; }
+    }
+
+    internal class DependedResource : TestResource
+    {
+    }
+
+
+    internal class ResourceA : Resource
     {
         public override IEnumerable<object> GetEqualityComponents()
         {
@@ -66,14 +110,13 @@ namespace Pancake.Tests
         }
     }
 
-    class ResourceB : Resource
+    internal class ResourceB : Resource
     {
         public override IEnumerable<object> GetEqualityComponents()
         {
             yield return Name;
         }
     }
-
 
 
     public class OrderedProvider<TResource> : ResourceProvider<TResource> where TResource : Resource
@@ -87,7 +130,7 @@ namespace Pancake.Tests
 
         public override TResource[] GetSystemResources(TResource[] resources)
         {
-            return new TResource[] { };
+            return new TResource[] {};
         }
 
         public override void Create(TResource resource)

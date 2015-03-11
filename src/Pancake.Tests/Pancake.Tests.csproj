@@ -51,7 +51,7 @@
     <Compile Include="BehaviorsTests.cs" />
     <Compile Include="FixieConventions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResolveDependenciesTests.cs" />
+    <Compile Include="DependencyResolutionTests.cs" />
     <Compile Include="ResourceOrderingTests.cs" />
     <Compile Include="TestResource.cs" />
     <Compile Include="TestResourceProvider.cs" />

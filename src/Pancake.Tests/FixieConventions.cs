@@ -13,6 +13,7 @@ namespace Pancake.Tests
         {
             Classes.Where(x => !x.IsNested && x.Name.EndsWith("Tests"));
             Methods.Where(x => x.IsPublic && x.IsVoid());
+            CaseExecution.Skip(x => !x.Method.IsPublic && x.Method.IsVoid());
         }
     }
 }

@@ -45,8 +45,11 @@
   <ItemGroup>
     <Compile Include="Dependency.cs" />
     <Compile Include="DependencyResolution\CreateResourceGraph.cs" />
+    <Compile Include="DependencyResolution\CreateTypeGraph.cs" />
+    <Compile Include="DependencyResolution\FindDependencies.cs" />
+    <Compile Include="DependencyResolution\MissingDependencyException.cs" />
     <Compile Include="DependencyResolution\ResourceGraph.cs" />
-    <Compile Include="DependencyResolution\ResourceNode.cs" />
+    <Compile Include="DependencyResolution\DependencyNode.cs" />
     <Compile Include="HashCodeHelper.cs" />
     <Compile Include="PancakeApi.cs" />
     <Compile Include="Ensure.cs" />
