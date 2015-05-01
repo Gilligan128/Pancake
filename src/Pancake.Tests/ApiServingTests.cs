@@ -151,7 +151,7 @@ namespace Pancake.Tests
 
     public class DescriptiveResource : Resource
     {
-        public override IEnumerable<object> GetEqualityComponents()
+        public override IEnumerable<object> GetSynchronizationComponents()
         {
             yield return Name;
             yield return Description;

@@ -67,7 +67,7 @@ namespace Pancake.Core
             foreach (
                 var matchingResource in
                     matchingResourcePairs.Where(x => x.Should.Ensure == Ensure.Present)
-                        .Where(x => !x.Should.Equals(x.System)))
+                        .Where(x => !x.Should.GetSynchronizationComponents().SequenceEqual(x.System.GetSynchronizationComponents())))
             {
                 provider.Synchronize(matchingResource.Should, matchingResource.System);
             }

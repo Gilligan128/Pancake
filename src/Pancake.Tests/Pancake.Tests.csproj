@@ -31,9 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Fixie">
+    <Reference Include="Fixie, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Fixie.1.0.0.3\lib\net45\Fixie.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Should">
       <HintPath>..\packages\Should.1.1.20\lib\Should.dll</HintPath>
@@ -49,6 +49,8 @@
   <ItemGroup>
     <Compile Include="ApiServingTests.cs" />
     <Compile Include="BehaviorsTests.cs" />
+    <Compile Include="DependedResource.cs" />
+    <Compile Include="FindDependencyPropertiesTests.cs" />
     <Compile Include="FixieConventions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DependencyResolutionTests.cs" />
@@ -57,7 +59,9 @@
     <Compile Include="TestResourceProvider.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pancake.Core\Pancake.Core.csproj">

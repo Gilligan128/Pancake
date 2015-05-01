@@ -9,6 +9,7 @@ namespace Pancake.Core
         void Flush();
         void Create(Resource missingResource);
         void Destroy(Resource resource);
+        bool ShouldSynchronize(Resource resource);
     }
 
 
@@ -21,28 +22,32 @@ namespace Pancake.Core
 
         public void Synchronize(Resource expectedResource, Resource systemResource)
         {
-            Synchronize((TResource)expectedResource, (TResource)systemResource);
+            Synchronize((TResource) expectedResource);
         }
 
         public virtual void Flush()
         {
-
         }
-
 
         public void Create(Resource missingResource)
         {
-            Create((TResource)missingResource);
+            Create((TResource) missingResource);
         }
 
         public void Destroy(Resource resource)
         {
-            Destroy((TResource)resource);
+            Destroy((TResource) resource);
+        }
+
+        public bool ShouldSynchronize(Resource resource)
+        {
+            return ShouldSynchronize((TResource) resource);
         }
 
         public abstract TResource[] GetSystemResources(TResource[] resources);
-        public abstract void Create(TResource resouce);
+        public abstract void Create(TResource resource);
         public abstract void Destroy(TResource resource);
-        public abstract void Synchronize(TResource resource, TResource systemResource);
+        public abstract void Synchronize(TResource resource);
+        public abstract bool ShouldSynchronize(TResource resource);
     }
 }

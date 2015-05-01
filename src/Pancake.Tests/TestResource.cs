@@ -3,9 +3,9 @@ using Pancake.Core;
 
 namespace Pancake.Tests
 {
-    internal class TestResource : Resource
+    public class TestResource : Resource
     {
-        public override IEnumerable<object> GetEqualityComponents()
+        public override IEnumerable<object> GetSynchronizationComponents()
         {
             yield return Name;
         }

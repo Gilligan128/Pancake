@@ -28,7 +28,13 @@ namespace Pancake.Core
             return HashCodeHelper.CombineHashCodes(GetEqualityComponents());
         }
 
-        public abstract IEnumerable<object> GetEqualityComponents();
+        public virtual IEnumerable<object> GetEqualityComponents()
+        {
+            yield return Name;
+        }
+
+
+        public abstract IEnumerable<object> GetSynchronizationComponents();
 
         public override string ToString()
         {

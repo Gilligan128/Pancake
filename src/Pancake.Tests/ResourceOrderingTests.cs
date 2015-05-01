@@ -52,14 +52,10 @@ namespace Pancake.Tests
         public Dependency<DependedResource> Dependency { get; set; }
     }
 
-    internal class DependedResource : TestResource
-    {
-    }
-
 
     internal class ResourceA : Resource
     {
-        public override IEnumerable<object> GetEqualityComponents()
+        public override IEnumerable<object> GetSynchronizationComponents()
         {
             yield return Name;
         }
@@ -67,7 +63,7 @@ namespace Pancake.Tests
 
     internal class ResourceB : Resource
     {
-        public override IEnumerable<object> GetEqualityComponents()
+        public override IEnumerable<object> GetSynchronizationComponents()
         {
             yield return Name;
         }
@@ -97,8 +93,13 @@ namespace Pancake.Tests
         {
         }
 
-        public override void Synchronize(TResource resource, TResource systemResource)
+        public override void Synchronize(TResource resource)
         {
+        }
+
+        public override bool ShouldSynchronize(TResource resource)
+        {
+            return true;
         }
     }
 }

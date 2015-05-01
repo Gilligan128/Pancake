@@ -78,6 +78,8 @@ namespace Pancake.Tests
             graph.ResolveDependencies().ShouldContain(resources[1]);
         }
 
+       
+
         public void ignores_blank_dependencies()
         {
             var resources = new[]
@@ -104,24 +106,11 @@ namespace Pancake.Tests
         }
 
 
-        private void ExpectException<TException>(Action doStuff) where TException : Exception
-        {
-            try
-            {
-                doStuff();
-
-                throw new InvalidOperationException(string.Format("Expected {0}", typeof (TException).Name));
-            }
-            catch (TException ex)
-            {
-            }
-        }
-
         private class ResourceA : Resource
         {
             public Dependency<ResourceB> Dependency { get; set; }
 
-            public override IEnumerable<object> GetEqualityComponents()
+            public override IEnumerable<object> GetSynchronizationComponents()
             {
                 yield return Name;
             }
@@ -132,18 +121,28 @@ namespace Pancake.Tests
             public Dependency<ResourceC> DependencyC { get; set; }
             public Dependency<ResourceD> DependencyD { get; set; }
 
-            public override IEnumerable<object> GetEqualityComponents()
+            public override IEnumerable<object> GetSynchronizationComponents()
             {
                 yield return Name;
             }
         };
     }
 
+    public class DependingArrayResource : Resource
+    {
+        public override IEnumerable<object> GetSynchronizationComponents()
+        {
+            yield return Name;
+        }
+
+        public Dependency<DependedResource>[] Dependencies { get; set; }
+    }
+
     internal class ResourceC : Resource
     {
         public Dependency<ResourceD> DependencyD { get; set; }
 
-        public override IEnumerable<object> GetEqualityComponents()
+        public override IEnumerable<object> GetSynchronizationComponents()
         {
             yield return Name;
         }
@@ -151,7 +150,7 @@ namespace Pancake.Tests
 
     internal class ResourceD : Resource
     {
-        public override IEnumerable<object> GetEqualityComponents()
+        public override IEnumerable<object> GetSynchronizationComponents()
         {
             yield return Name;
         }
@@ -161,7 +160,7 @@ namespace Pancake.Tests
     {
         public Dependency<CircularB> Dependency { get; set; }
 
-        public override IEnumerable<object> GetEqualityComponents()
+        public override IEnumerable<object> GetSynchronizationComponents()
         {
             yield return Name;
         }
@@ -171,7 +170,7 @@ namespace Pancake.Tests
     {
         public Dependency<CircularC> Dependency { get; set; }
 
-        public override IEnumerable<object> GetEqualityComponents()
+        public override IEnumerable<object> GetSynchronizationComponents()
         {
             yield return Name;
         }
@@ -181,7 +180,7 @@ namespace Pancake.Tests
     {
         public Dependency<CircularA> Dependency { get; set; }
 
-        public override IEnumerable<object> GetEqualityComponents()
+        public override IEnumerable<object> GetSynchronizationComponents()
         {
             yield return Name;
         }
