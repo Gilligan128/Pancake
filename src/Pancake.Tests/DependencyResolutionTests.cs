@@ -77,8 +77,25 @@ namespace Pancake.Tests
             graph.ResolveDependencies().ShouldContain(resources[0]);
             graph.ResolveDependencies().ShouldContain(resources[1]);
         }
+        
+        public void should_create_dependency_graph_from_contextual_dependency_property()
+        {
+            var sut = new CreateResourceGraph();
 
-       
+            var resources = new Resource[]
+            {
+                new ResourceD { Name = "D" },
+                new ContextedResource { Name = "Context", ContextD = new ResourceContext<ResourceD>("D") }
+            };
+
+            var graph = sut.Execute(resources);
+
+            var resolved = graph.ResolveDependencies();
+
+            resolved.Count().ShouldEqual(2);
+            resolved.ShouldContain(resources[0]);
+            resolved.ShouldContain(resources[1]);
+        }
 
         public void ignores_blank_dependencies()
         {
@@ -105,84 +122,49 @@ namespace Pancake.Tests
             resolved.ShouldContain(typeof(DependingResource));
         }
 
+        private class ContextedResource : TestResource
+        {
+            public ResourceContext<ResourceD> ContextD { get; set; }
+        }
 
-        private class ResourceA : Resource
+        private class ResourceA : TestResource
         {
             public Dependency<ResourceB> Dependency { get; set; }
-
-            public override IEnumerable<object> GetSynchronizationComponents()
-            {
-                yield return Name;
-            }
         };
 
-        private class ResourceB : Resource
+        private class ResourceB : TestResource
         {
             public Dependency<ResourceC> DependencyC { get; set; }
             public Dependency<ResourceD> DependencyD { get; set; }
-
-            public override IEnumerable<object> GetSynchronizationComponents()
-            {
-                yield return Name;
-            }
         };
     }
 
-    public class DependingArrayResource : Resource
+    public class DependingArrayResource : TestResource
     {
-        public override IEnumerable<object> GetSynchronizationComponents()
-        {
-            yield return Name;
-        }
-
         public Dependency<DependedResource>[] Dependencies { get; set; }
     }
 
-    internal class ResourceC : Resource
+    internal class ResourceC : TestResource
     {
         public Dependency<ResourceD> DependencyD { get; set; }
-
-        public override IEnumerable<object> GetSynchronizationComponents()
-        {
-            yield return Name;
-        }
     }
 
-    internal class ResourceD : Resource
+    internal class ResourceD : TestResource
     {
-        public override IEnumerable<object> GetSynchronizationComponents()
-        {
-            yield return Name;
-        }
     }
 
-    internal class CircularA : Resource
+    internal class CircularA : TestResource
     {
         public Dependency<CircularB> Dependency { get; set; }
-
-        public override IEnumerable<object> GetSynchronizationComponents()
-        {
-            yield return Name;
-        }
     }
 
-    internal class CircularB : Resource
+    internal class CircularB : TestResource
     {
         public Dependency<CircularC> Dependency { get; set; }
-
-        public override IEnumerable<object> GetSynchronizationComponents()
-        {
-            yield return Name;
-        }
     }
 
-    internal class CircularC : Resource
+    internal class CircularC : TestResource
     {
         public Dependency<CircularA> Dependency { get; set; }
-
-        public override IEnumerable<object> GetSynchronizationComponents()
-        {
-            yield return Name;
-        }
     }
 }

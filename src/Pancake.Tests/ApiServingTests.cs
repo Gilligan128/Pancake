@@ -32,6 +32,41 @@ namespace Pancake.Tests
             resourceProvider.DestroyedResources.ShouldContain(testResource);
         }
 
+        public void should_create_contextual_resources_that_do_not_exist_but_ensured_present()
+        {
+            var sut = new PancakeApi();
+            var resourceProvider = new TestResourceProvider<TestContextualResource>();
+            var testContextualResource = new TestContextualResource
+            {
+                Name = "contextual test"
+            };
+            var testResource1 = new TestResource
+            {
+                Name = "test1"
+            };
+            var testResource2 = new TestResource
+            {
+                Name = "test2"
+            };
+            sut.Configure(cfg =>
+            {
+                cfg.Contexts<TestResource>("test1", "test2");
+                cfg.RegisterProvider(new TestResourceProvider<TestResource>());
+                cfg.RegisterProvider(resourceProvider);
+                cfg.Resource(testResource1);
+                cfg.Resource(testResource2);
+                cfg.ContextualResource(testContextualResource, registration =>
+                registration.AppliesTo
+                    .Context(x => x.Context, c => c.All()));
+            });
+
+            sut.Serve();
+
+            resourceProvider.CreatedResources.Count().ShouldEqual(2);
+            resourceProvider.CreatedResources.Take(1).First().Context.Name.ShouldEqual("test1");
+            resourceProvider.CreatedResources.Skip(1).Take(1).First().Context.Name.ShouldEqual("test2");
+        }
+
         public void should_create_resources_that_do_not_exist_but_ensured_present()
         {
             var sut = new PancakeApi();

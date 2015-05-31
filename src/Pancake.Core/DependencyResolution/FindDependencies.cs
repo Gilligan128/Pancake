@@ -7,11 +7,19 @@ namespace Pancake.Core.DependencyResolution
 {
     public class FindDependencyProperties
     {
+        private static Type DependencyType = typeof(Dependency<>);
+        private static Type ResourceContextType = typeof(ResourceContext<>);
+
         public ResourceDependencyReference[] Execute(Resource resource)
         {
             var dependencyProperties = resource.GetType().GetProperties()
                 .Where(p => p.PropertyType.IsGenericType)
-                .Where(p => typeof (Dependency<>).IsAssignableFrom(p.PropertyType.GetGenericTypeDefinition()));
+                .Where(p =>
+                {
+                    var genericType = p.PropertyType.GetGenericTypeDefinition();
+                    return DependencyType.IsAssignableFrom(genericType)
+                    || ResourceContextType.IsAssignableFrom(genericType);
+                });
             var dependencyKeyProp = dependencyProperties.Select(p => new
             {
                 DependencyProperty = p.GetValue(resource),
