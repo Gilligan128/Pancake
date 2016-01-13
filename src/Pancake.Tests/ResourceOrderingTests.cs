@@ -12,8 +12,8 @@ namespace Pancake.Tests
         {
             var sut = new PancakeApi();
             var servedResources = new List<Resource>();
-            var dependedResource1 = new DependedResource {Name = "First"};
-            var dependedResource2 = new DependedResource {Name = "Second"};
+            var dependedResource1 = new DependedResource { Name = "First" };
+            var dependedResource2 = new DependedResource { Name = "Second" };
             var dependingResource1 = new DependingResource
             {
                 Name = "Second To Last",
@@ -44,6 +44,35 @@ namespace Pancake.Tests
             servedResources.Take(2).ShouldContain(dependedResource2);
             servedResources.Skip(2).ShouldContain(dependingResource1);
             servedResources.Skip(2).ShouldContain(dependingResource2);
+        }
+
+        public void serves_in_dependency_order_three_levels_deep()
+        {
+            var sut = new PancakeApi();
+            var servedResources = new List<Resource>();
+            sut.Configure(cfg =>
+            {
+                cfg.RegisterProvider(new OrderedProvider<DependingResource>(servedResources));
+                cfg.RegisterProvider(new OrderedProvider<DependedResource>(servedResources));
+                cfg.RegisterProvider(new OrderedProvider<FinalDependendResource>(servedResources));
+            });
+            sut.Resources(r => r.Resources(new DependingResource
+            {
+                Name = "D",
+                Dependency = "C"
+            }, new DependingResource
+            {
+                Name = "C",
+                Dependency = "B"
+            }, new DependedResource
+            {
+                Name = "B",
+                Dependency = "A"
+            }, new FinalDependendResource()
+            {
+                Name = "A"
+            }));
+
         }
     }
 
@@ -81,7 +110,7 @@ namespace Pancake.Tests
 
         public override TResource[] GetSystemResources(TResource[] resources)
         {
-            return new TResource[] {};
+            return new TResource[] { };
         }
 
         public override void Create(TResource resource)
@@ -93,11 +122,11 @@ namespace Pancake.Tests
         {
         }
 
-        public override void Synchronize(TResource resource)
+        public override void Synchronize(TResource resource, TResource systemResource)
         {
         }
 
-        public override bool ShouldSynchronize(TResource resource)
+        public override bool ShouldSynchronize(TResource resource, TResource systemResource)
         {
             return true;
         }

@@ -23,11 +23,6 @@ namespace Pancake.Tests
             _systemResourcs.Add(resource);
         }
 
-        public void Synchronize()
-        {
-            WasSynchronized = true;
-        }
-
         public override TResource[] GetSystemResources(TResource[] resources)
         {
             return _systemResourcs.Join(resources, l => l.Name, r => r.Name, (resource, testResource) => resource).ToArray();
@@ -43,12 +38,12 @@ namespace Pancake.Tests
             _destroyedResources.Add(resource);
         }
 
-        public override void Synchronize(TResource resource)
+        public override void Synchronize(TResource resource, TResource systemResource)
         {
             _synchronizedResources.Add(resource);
         }
 
-        public override bool ShouldSynchronize(TResource resource)
+        public override bool ShouldSynchronize(TResource resource, TResource systemResource)
         {
             return _systemResourcs.Where(x => x.Name == resource.Name)
                 .Any(x => !x.GetSynchronizationComponents().SequenceEqual(resource.GetSynchronizationComponents()));

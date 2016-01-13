@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 
 namespace Pancake.Core
@@ -9,7 +10,8 @@ namespace Pancake.Core
         void Flush();
         void Create(Resource missingResource);
         void Destroy(Resource resource);
-        bool ShouldSynchronize(Resource resource);
+        bool ShouldSynchronize(Resource desiredResource, Resource systemResource);
+        void Prefetch();
     }
 
 
@@ -22,7 +24,7 @@ namespace Pancake.Core
 
         public void Synchronize(Resource expectedResource, Resource systemResource)
         {
-            Synchronize((TResource) expectedResource);
+            Synchronize((TResource) expectedResource, (TResource)systemResource);
         }
 
         public virtual void Flush()
@@ -39,15 +41,20 @@ namespace Pancake.Core
             Destroy((TResource) resource);
         }
 
-        public bool ShouldSynchronize(Resource resource)
+        public bool ShouldSynchronize(Resource desiredResource, Resource systemResource)
         {
-            return ShouldSynchronize((TResource) resource);
+            return ShouldSynchronize((TResource) desiredResource,(TResource)systemResource);
         }
 
         public abstract TResource[] GetSystemResources(TResource[] resources);
         public abstract void Create(TResource resource);
         public abstract void Destroy(TResource resource);
-        public abstract void Synchronize(TResource resource);
-        public abstract bool ShouldSynchronize(TResource resource);
+        public abstract void Synchronize(TResource desiredResource, TResource systemResource);
+        public abstract bool ShouldSynchronize(TResource desiredResource, TResource systemResource);
+
+        public virtual void Prefetch()
+        {
+            
+        }
     }
 }

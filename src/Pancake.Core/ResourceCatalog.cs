@@ -37,6 +37,14 @@ namespace Pancake.Core
             _behaviors.Add(behavior);
         }
 
+        void ResourceConfig.Resources(params Resource[] resources)
+        {
+            foreach (var resource in resources)
+            {
+                _resources.Add(resource);
+            }
+        }
+
         public ResourceProvider<TResource> ProviderFor<TResource>() where TResource : Resource
         {
             return (ResourceProvider<TResource>) _providers[typeof (TResource)];

@@ -26,20 +26,18 @@ namespace Pancake.Core
         {
             var graph = new CreateTypeGraph().Execute(_catalog.Resources);
             var resourceTypes = graph.ResolveDependencies();
-            foreach (var resourceSet in _catalog.Resources.GroupBy(r => r.GetType())
-                .Select(r => new { type = r.Key, provider = _catalog.ProviderFor(r.Key), resources = r.ToArray()})
-                .OrderBy(kvp => Array.IndexOf(resourceTypes, kvp.type)))
+            foreach(var resourceType in resourceTypes)
             {
-                var provider = resourceSet.provider;
-                var resources = resourceSet.resources;
+                var resources = _catalog.Resources.Where(x => x.GetType() == resourceType).ToArray();
+                var provider = _catalog.ProviderFor(resourceType);
                 var systemResources = provider.GetSystemResources(resources);
                 var matchingResourcePairs = MatchResources(resources, systemResources);
                 var missingResources = resources.Except(matchingResourcePairs.Select(m => m.Should));
 
+                provider.Prefetch();
                 CreateMissingResources(missingResources, provider);
                 SynchronizeOutofSyncResources(matchingResourcePairs, provider);
                 DestroyResourcesThatShouldBeAbsent(matchingResourcePairs, provider);
-
                 provider.Flush();
             }
         }

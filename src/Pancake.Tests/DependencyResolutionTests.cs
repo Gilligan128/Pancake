@@ -15,6 +15,7 @@ namespace Pancake.Tests
             var sut = new ResourceGraph();
             var resourceA = new ResourceA
             {
+
                 Name = "A"
             };
             var resourceB = new ResourceB
@@ -103,6 +104,34 @@ namespace Pancake.Tests
             var resolved = graph.ResolveDependencies();
             resolved.ShouldContain(typeof(DependedResource));
             resolved.ShouldContain(typeof(DependingResource));
+        }
+
+        public void should_not_have_dependency_resolution_issues()
+        {
+            var sut = new ResourceGraph();
+            var resourceA = new ResourceA
+            {
+                Name = "A"
+            };
+            var resourceB = new ResourceB
+            {
+                Name = "B"
+            };
+            var resourceC = new ResourceC
+            {
+                Name = "C"
+            };
+            var resourceANode = new DependencyNode<Resource>(resourceA);
+            var resourceBNode = new DependencyNode<Resource>(resourceB);
+            var resourceCNode = new DependencyNode<Resource>(resourceC);
+            resourceANode.AddDependency(resourceBNode);
+            resourceBNode.AddDependency(resourceCNode);
+            sut.AddNode(resourceANode);
+
+            var resolved = sut.ResolveDependencies();
+            resolved[0].ShouldEqual(resourceC);
+            resolved[1].ShouldEqual(resourceB);
+            resolved[2].ShouldEqual(resourceA);
         }
 
 
