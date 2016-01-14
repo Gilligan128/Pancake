@@ -12,7 +12,7 @@ namespace Pancake.Tests
         public FixieConventions()
         {
             Classes.Where(x => !x.IsNested && x.Name.EndsWith("Tests"));
-            Methods.Where(x => x.IsPublic && x.IsVoid());
+            Methods.Where(x => x.IsPublic && x.IsVoid() && !x.Name.Contains("WaitForPeriodicExport"));
             CaseExecution.Skip(x => !x.Method.IsPublic && x.Method.IsVoid());
         }
     }
