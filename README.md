@@ -15,7 +15,7 @@ Serving
 This will apply all Resources to ensure their desired state.
 
 Planned Supported Persistence Mechanisms (in order of implementation):
-- [ ] NHibernate 
+- [x] NHibernate 
 - [ ] ADO.Net 
-- [ ] RavendDB - Maybe?
+- [x] RavendDB - Maybe?
 - [ ] Entity Framework?
