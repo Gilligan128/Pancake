@@ -6,6 +6,7 @@ using Raven.Tests.Helpers;
 using Should;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace Pancake.Tests.RavenDB
 {
@@ -90,13 +91,16 @@ namespace Pancake.Tests.RavenDB
                 return new TestResource[0];
             }
 
-            public override bool ShouldSynchronize(TestResource resource)
+
+            public override bool ShouldSynchronize(TestResource desiredResource, TestResource systemResource)
             {
                 return false;
             }
 
-            public override void Synchronize(TestResource expectedResource)
+
+            public override void Synchronize(TestResource desiredResource, TestResource systemResource)
             {
+                throw new NotImplementedException();
             }
         }
     }
