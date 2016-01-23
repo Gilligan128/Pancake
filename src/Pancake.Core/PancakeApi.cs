@@ -1,8 +1,5 @@
-﻿using Pancake.Core.DependencyResolution;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Runtime.Remoting.Channels;
 
 namespace Pancake.Core
 {
@@ -13,7 +10,12 @@ namespace Pancake.Core
 
         public PancakeApi()
         {
-            _defaultServe = new DefaultServe();
+            _defaultServe =
+                new DefaultServe(
+                    new DefaultServeFromProvider(new DefaultMatchResources(), new DefaultCreateResources(),
+                        new DefaultSynchronizeResources(), new DefaultDestroyResources(),
+                        new DefaultStartProviderLifecycle()), new GetResourceTypesByDependency(),
+                    new GetResourceProvider());
         }
 
         public PancakeApi(IServe server)
@@ -43,16 +45,5 @@ namespace Pancake.Core
         {
             cfg(_catalog);
         }
-    }
-
-    public interface IServe
-    {
-        void Execute(ResourceCatalog resourceCatalog);
-    }
-
-    public class ResourcePair
-    {
-        public Resource Should { get; set; }
-        public Resource System { get; set; }
     }
 }

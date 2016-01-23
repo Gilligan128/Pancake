@@ -2,7 +2,7 @@
 
 namespace Pancake.Core
 {
-    internal interface ICreateResources
+    public interface ICreateResources
     {
         void Execute(Resource[] missingResources, ResourceProvider provider);
     }

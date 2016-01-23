@@ -1,6 +1,6 @@
 namespace Pancake.Core
 {
-    internal interface IDestroyResources
+    public interface IDestroyResources
     {
         void Execute(ResourcePair[] matchingResourcePairs, ResourceProvider provider);
     }

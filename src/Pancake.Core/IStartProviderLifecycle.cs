@@ -2,7 +2,7 @@
 
 namespace Pancake.Core
 {
-    internal interface IStartProviderLifecycle
+    public interface IStartProviderLifecycle
     {
         IDisposable Execute(ResourceProvider provider);
     }
