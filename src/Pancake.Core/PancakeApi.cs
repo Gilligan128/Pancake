@@ -50,7 +50,7 @@ namespace Pancake.Core
         void Execute(ResourceCatalog resourceCatalog);
     }
 
-    internal class ResourcePair
+    public class ResourcePair
     {
         public Resource Should { get; set; }
         public Resource System { get; set; }

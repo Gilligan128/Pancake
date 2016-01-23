@@ -43,10 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DefatulServeFromProvider.cs" />
+    <Compile Include="DefaultCreateResources.cs" />
+    <Compile Include="DefaultDestroyResources.cs" />
+    <Compile Include="DefaultMatchResources.cs" />
+    <Compile Include="DefaultServeFromProvider.cs" />
+    <Compile Include="DefaultGetResourceTypesByDependency.cs" />
     <Compile Include="DefaultGetResourceTypes.cs" />
     <Compile Include="DefaultServe.cs" />
-    <Compile Include="DefaultServeFromProvider.cs" />
+    <Compile Include="DefaultStartProviderLifecycle.cs" />
+    <Compile Include="DefaultSynchronizeResources.cs" />
     <Compile Include="Dependency.cs" />
     <Compile Include="DependencyResolution\CreateResourceGraph.cs" />
     <Compile Include="DependencyResolution\CreateTypeGraph.cs" />
@@ -56,9 +61,17 @@
     <Compile Include="DependencyResolution\DependencyNode.cs" />
     <Compile Include="GetResourceProvider.cs" />
     <Compile Include="HashCodeHelper.cs" />
+    <Compile Include="ICreateResources.cs" />
+    <Compile Include="IDestroyResources.cs" />
+    <Compile Include="IGetResourceProvider.cs" />
+    <Compile Include="IGetResourceTypesByDependency.cs" />
+    <Compile Include="IMatchResources.cs" />
+    <Compile Include="IStartProviderLifecycle.cs" />
+    <Compile Include="ISynchronizeResources.cs" />
     <Compile Include="PancakeApi.cs" />
     <Compile Include="Ensure.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProviderLifcycle.cs" />
     <Compile Include="Resource.cs" />
     <Compile Include="ResourceCatalog.cs" />
     <Compile Include="ResourceConfig.cs" />
