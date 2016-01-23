@@ -43,6 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DefatulServeFromProvider.cs" />
+    <Compile Include="DefaultGetResourceTypes.cs" />
+    <Compile Include="DefaultServe.cs" />
+    <Compile Include="DefaultServeFromProvider.cs" />
     <Compile Include="Dependency.cs" />
     <Compile Include="DependencyResolution\CreateResourceGraph.cs" />
     <Compile Include="DependencyResolution\CreateTypeGraph.cs" />
@@ -50,6 +54,7 @@
     <Compile Include="DependencyResolution\MissingDependencyException.cs" />
     <Compile Include="DependencyResolution\ResourceGraph.cs" />
     <Compile Include="DependencyResolution\DependencyNode.cs" />
+    <Compile Include="GetResourceProvider.cs" />
     <Compile Include="HashCodeHelper.cs" />
     <Compile Include="PancakeApi.cs" />
     <Compile Include="Ensure.cs" />

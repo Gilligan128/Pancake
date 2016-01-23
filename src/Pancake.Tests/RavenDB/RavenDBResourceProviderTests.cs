@@ -23,9 +23,9 @@ namespace Pancake.Tests.RavenDB
                     api.Configure(cfg =>
                     {
                         cfg.UseRavenDB(session);
-                        cfg.Resource(new TestResource { Name = "foo" });
                         cfg.Resource(new TestResource { Name = "bar" });
                         cfg.RegisterProvider(new TestResourceProvider());
+                        cfg.Resource(new TestResource { Name = "foo" });
                     });
 
                     api.Serve();
@@ -34,10 +34,9 @@ namespace Pancake.Tests.RavenDB
                 using (var session = store.OpenSession())
                 {
                     var tests = session.Query<Test>().ToArray();
-
                     tests.Length.ShouldEqual(2);
-                    tests[0].Name.ShouldEqual("foo");
-                    tests[1].Name.ShouldEqual("bar");
+                    tests[0].Name.ShouldEqual("bar");
+                    tests[1].Name.ShouldEqual("foo");
                 }
             }
         }
