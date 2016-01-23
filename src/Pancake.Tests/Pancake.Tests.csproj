@@ -69,7 +69,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiServingTests.cs" />
-    <Compile Include="BehaviorsTests.cs" />
     <Compile Include="DependedResource.cs" />
     <Compile Include="FindDependencyPropertiesTests.cs" />
     <Compile Include="FixieConventions.cs" />

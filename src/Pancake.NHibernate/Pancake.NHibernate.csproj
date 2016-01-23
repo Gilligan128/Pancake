@@ -46,10 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Catalogextensions.cs" />
     <Compile Include="NHibernateResourceProvider.cs" />
+    <Compile Include="NHibernateServeFromProvider.cs" />
+    <Compile Include="PancakeNHibernateExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UseNHibernateSessionBehavior.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pancake.Core\Pancake.Core.csproj">

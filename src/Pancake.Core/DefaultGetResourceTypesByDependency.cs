@@ -3,7 +3,7 @@ using Pancake.Core.DependencyResolution;
 
 namespace Pancake.Core
 {
-    public class GetResourceTypesByDependency :  IGetResourceTypesByDependency
+    public class DefaultGetResourceTypesByDependency :  IGetResourceTypesByDependency
     {
         public Type[] Execute(ResourceCatalog resourceCatalog)
         {

@@ -14,8 +14,8 @@ namespace Pancake.Core
                 new DefaultServe(
                     new DefaultServeFromProvider(new DefaultMatchResources(), new DefaultCreateResources(),
                         new DefaultSynchronizeResources(), new DefaultDestroyResources(),
-                        new DefaultStartProviderLifecycle()), new GetResourceTypesByDependency(),
-                    new GetResourceProvider());
+                        new DefaultStartProviderLifecycle()), new DefaultGetResourceTypesByDependency(),
+                    new DefaultGetResourceProvider());
         }
 
         public PancakeApi(IServe server)
@@ -29,14 +29,6 @@ namespace Pancake.Core
         }
 
         public void Serve()
-        {
-            Action action = ServeCore;
-            var behaviorChain = _catalog.ServingBehaviors.Reverse().Aggregate(action,
-                (next, behavior) => () => behavior.Serve(_catalog, next));
-            behaviorChain();
-        }
-
-        private void ServeCore()
         {
             _defaultServe.Execute(_catalog);
         }

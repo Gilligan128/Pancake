@@ -18,11 +18,10 @@ namespace Pancake.Tests.RavenDB
             {
                 using (var session = store.OpenSession())
                 {
-                    var api = new PancakeApi();
+                    var api = session.CreatePancakes();
 
                     api.Configure(cfg =>
                     {
-                        cfg.UseRavenDB(session);
                         cfg.Resource(new TestResource { Name = "bar" });
                         cfg.RegisterProvider(new TestResourceProvider());
                         cfg.Resource(new TestResource { Name = "foo" });

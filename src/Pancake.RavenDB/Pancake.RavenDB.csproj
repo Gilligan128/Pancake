@@ -50,10 +50,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfigExtensions.cs" />
+    <Compile Include="PancakeRavenExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RavenDBResourceProvider.cs" />
-    <Compile Include="UseRavenDBSessionBehavior.cs" />
+    <Compile Include="RavenServeFromProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -59,7 +59,7 @@
     <Compile Include="DependencyResolution\MissingDependencyException.cs" />
     <Compile Include="DependencyResolution\ResourceGraph.cs" />
     <Compile Include="DependencyResolution\DependencyNode.cs" />
-    <Compile Include="GetResourceProvider.cs" />
+    <Compile Include="DefaultGetResourceProvider.cs" />
     <Compile Include="HashCodeHelper.cs" />
     <Compile Include="ICreateResources.cs" />
     <Compile Include="IDestroyResources.cs" />

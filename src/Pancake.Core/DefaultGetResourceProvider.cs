@@ -2,7 +2,7 @@
 
 namespace Pancake.Core
 {
-    public class GetResourceProvider : IGetResourceProvider
+    public class DefaultGetResourceProvider : IGetResourceProvider
     {
         public ResourceProvider Execute(ResourceCatalog resourceCatalog, Type resourceType)
         {
