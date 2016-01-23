@@ -46,6 +46,7 @@
     <Compile Include="DefaultCreateResources.cs" />
     <Compile Include="DefaultDestroyResources.cs" />
     <Compile Include="DefaultMatchResources.cs" />
+    <Compile Include="Defaults.cs" />
     <Compile Include="DefaultServeFromProvider.cs" />
     <Compile Include="DefaultGetResourceTypesByDependency.cs" />
     <Compile Include="DefaultGetResourceTypes.cs" />
