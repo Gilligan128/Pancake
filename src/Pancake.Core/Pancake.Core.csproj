@@ -80,6 +80,7 @@
     <Compile Include="ResourcePair.cs" />
     <Compile Include="ResourceProvider.cs" />
     <Compile Include="ServingBehavior.cs" />
+    <Compile Include="SynrchonizationEqualityComparer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

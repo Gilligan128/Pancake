@@ -4,7 +4,6 @@ using Raven.Client.Document;
 using Raven.Client.Embedded;
 using Raven.Tests.Helpers;
 using Should;
-using System.Collections.Generic;
 using System.Linq;
 using System;
 
@@ -57,10 +56,6 @@ namespace Pancake.Tests.RavenDB
 
         public class TestResource : Resource
         {
-            public override IEnumerable<object> GetSynchronizationComponents()
-            {
-                yield return Name;
-            }
         }
 
         public class TestResourceProvider : RavenDBResourceProvider<TestResource>

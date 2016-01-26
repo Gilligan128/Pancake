@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -151,12 +150,6 @@ namespace Pancake.Tests
 
     public class DescriptiveResource : Resource
     {
-        public override IEnumerable<object> GetSynchronizationComponents()
-        {
-            yield return Name;
-            yield return Description;
-        }
-
         public string Description { get; set; }
     }
 }

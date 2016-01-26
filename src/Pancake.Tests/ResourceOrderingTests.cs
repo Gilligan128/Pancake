@@ -84,18 +84,10 @@ namespace Pancake.Tests
 
     internal class ResourceA : Resource
     {
-        public override IEnumerable<object> GetSynchronizationComponents()
-        {
-            yield return Name;
-        }
     }
 
     internal class ResourceB : Resource
     {
-        public override IEnumerable<object> GetSynchronizationComponents()
-        {
-            yield return Name;
-        }
     }
 
 

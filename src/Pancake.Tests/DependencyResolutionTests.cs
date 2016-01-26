@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Pancake.Core;
 using Pancake.Core.DependencyResolution;
@@ -138,80 +137,41 @@ namespace Pancake.Tests
         private class ResourceA : Resource
         {
             public Dependency<ResourceB> Dependency { get; set; }
-
-            public override IEnumerable<object> GetSynchronizationComponents()
-            {
-                yield return Name;
-            }
         };
 
         private class ResourceB : Resource
         {
             public Dependency<ResourceC> DependencyC { get; set; }
             public Dependency<ResourceD> DependencyD { get; set; }
-
-            public override IEnumerable<object> GetSynchronizationComponents()
-            {
-                yield return Name;
-            }
         };
     }
 
     public class DependingArrayResource : Resource
     {
-        public override IEnumerable<object> GetSynchronizationComponents()
-        {
-            yield return Name;
-        }
-
         public Dependency<DependedResource>[] Dependencies { get; set; }
     }
 
     internal class ResourceC : Resource
     {
         public Dependency<ResourceD> DependencyD { get; set; }
-
-        public override IEnumerable<object> GetSynchronizationComponents()
-        {
-            yield return Name;
-        }
     }
 
     internal class ResourceD : Resource
     {
-        public override IEnumerable<object> GetSynchronizationComponents()
-        {
-            yield return Name;
-        }
     }
 
     internal class CircularA : Resource
     {
         public Dependency<CircularB> Dependency { get; set; }
-
-        public override IEnumerable<object> GetSynchronizationComponents()
-        {
-            yield return Name;
-        }
     }
 
     internal class CircularB : Resource
     {
         public Dependency<CircularC> Dependency { get; set; }
-
-        public override IEnumerable<object> GetSynchronizationComponents()
-        {
-            yield return Name;
-        }
     }
 
     internal class CircularC : Resource
     {
         public Dependency<CircularA> Dependency { get; set; }
-
-        public override IEnumerable<object> GetSynchronizationComponents()
-        {
-            yield return Name;
-        }
     }
 }

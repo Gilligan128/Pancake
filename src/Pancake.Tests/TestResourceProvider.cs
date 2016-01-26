@@ -45,8 +45,7 @@ namespace Pancake.Tests
 
         public override bool ShouldSynchronize(TResource resource, TResource systemResource)
         {
-            return _systemResourcs.Where(x => x.Name == resource.Name)
-                .Any(x => !x.GetSynchronizationComponents().SequenceEqual(resource.GetSynchronizationComponents()));
+            return true;
         }
 
         public override void Flush()
